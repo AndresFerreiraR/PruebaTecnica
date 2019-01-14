@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PruebaTecnicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Numero_Identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_Nacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK_ID_VENTAS_CLIENTE" FromRole="Cliente" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="Cobertura">
+    <Key>
+      <PropertyRef Name="IdCobertura" />
+    </Key>
+    <Property Name="IdCobertura" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_IdProducto" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_ID_PRODUCTO_COBERTURA" FromRole="Cobertura" ToRole="Producto" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="IdCompany" />
+    </Key>
+    <Property Name="IdCompany" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+    <Property Name="Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_ID_COMPANY_PRODUCTO" FromRole="Company" ToRole="Producto" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_IdCompany" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Prima" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+    <Property Name="ValorAsegurado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cobertura" Relationship="Self.FK_ID_PRODUCTO_COBERTURA" FromRole="Producto" ToRole="Cobertura" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_ID_COMPANY_PRODUCTO" FromRole="Producto" ToRole="Company" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK_ID_VENTAS_PRODUCTO" FromRole="Producto" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="IdVentas" />
+    </Key>
+    <Property Name="IdVentas" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FK_IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="FK_IdProducto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_ID_VENTAS_CLIENTE" FromRole="Ventas" ToRole="Cliente" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_ID_VENTAS_PRODUCTO" FromRole="Ventas" ToRole="Producto" />
+  </EntityType>
+  <Association Name="FK_ID_VENTAS_CLIENTE">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="FK_IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ID_PRODUCTO_COBERTURA">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="Cobertura" Type="Self.Cobertura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="Cobertura">
+        <PropertyRef Name="FK_IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ID_COMPANY_PRODUCTO">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="IdCompany" />
+      </Principal>
+      <Dependent Role="Producto">
+        <PropertyRef Name="FK_IdCompany" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ID_VENTAS_PRODUCTO">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="FK_IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PruebaTecnicaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Cobertura" EntityType="Self.Cobertura" />
+    <EntitySet Name="Company" EntityType="Self.Company" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" />
+    <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+    <AssociationSet Name="FK_ID_VENTAS_CLIENTE" Association="Self.FK_ID_VENTAS_CLIENTE">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ID_PRODUCTO_COBERTURA" Association="Self.FK_ID_PRODUCTO_COBERTURA">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Cobertura" EntitySet="Cobertura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ID_COMPANY_PRODUCTO" Association="Self.FK_ID_COMPANY_PRODUCTO">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Producto" EntitySet="Producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ID_VENTAS_PRODUCTO" Association="Self.FK_ID_VENTAS_PRODUCTO">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
