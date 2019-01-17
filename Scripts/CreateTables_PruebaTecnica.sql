@@ -1,6 +1,9 @@
+CREATE DATABASE PruebaTecnica
+
+USE [PruebaTecnica]
 CREATE TABLE dbo.Company
 (
-	IdCompany INT NOT NULL,
+	IdCompany INT NOT NULL IDENTITY,
 	Nombre varchar(50) NOT NULL,
 	NIT varchar(50) NOT NULL UNIQUE,
 	Telefono varchar(18) NULL,
@@ -10,7 +13,7 @@ CREATE TABLE dbo.Company
 
 CREATE TABLE dbo.Producto
 (
-	IdProducto INT,
+	IdProducto INT NOT NULL IDENTITY,
 	Nombre varchar(50) NOT NULL,
 	FK_IdCompany int NOT NULL,
 	Descripcion varchar(200) NULL,
@@ -23,7 +26,7 @@ CREATE TABLE dbo.Producto
 
 CREATE TABLE dbo.Cobertura
 (
-	IdCobertura INT,
+	IdCobertura INT NOT NULL IDENTITY,
 	Nombre varchar(50) NOT NULL,
 	FK_IdProducto int NOT NULL,
 	Descripcion varchar(200) NULL,
@@ -47,7 +50,7 @@ CREATE TABLE dbo.Cliente
 
 CREATE TABLE dbo.Ventas
 (
-	IdVentas INT NOT NULL,
+	IdVentas INT NOT NULL IDENTITY,
 	Descripcion varchar(50) NOT NULL,
 	FK_IdCliente INT NOT NULL,
 	FK_IdProducto INT NOT NULL,

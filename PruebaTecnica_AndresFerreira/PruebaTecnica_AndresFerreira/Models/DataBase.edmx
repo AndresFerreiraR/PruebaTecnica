@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PruebaTecnicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PruebaTecnicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="IdCliente" />
@@ -21,7 +21,7 @@
           <Key>
             <PropertyRef Name="IdCobertura" />
           </Key>
-          <Property Name="IdCobertura" Type="int" Nullable="false" />
+          <Property Name="IdCobertura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FK_IdProducto" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="200" />
@@ -30,7 +30,7 @@
           <Key>
             <PropertyRef Name="IdCompany" />
           </Key>
-          <Property Name="IdCompany" Type="int" Nullable="false" />
+          <Property Name="IdCompany" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="NIT" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="18" />
@@ -40,7 +40,7 @@
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FK_IdCompany" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="200" />
@@ -51,7 +51,7 @@
           <Key>
             <PropertyRef Name="IdVentas" />
           </Key>
-          <Property Name="IdVentas" Type="int" Nullable="false" />
+          <Property Name="IdVentas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FK_IdCliente" Type="int" Nullable="false" />
           <Property Name="FK_IdProducto" Type="int" Nullable="false" />
@@ -127,8 +127,7 @@
             <End Role="Ventas" EntitySet="Ventas" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PruebaTecnicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
